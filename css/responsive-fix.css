@@ -1,0 +1,402 @@
+/* ========================================
+Digital Closet
+レスポンシブ対応
+======================================== */
+
+/* 基本設定 */
+*,
+*::before,
+*::after {
+box-sizing: border-box;
+}
+
+html {
+width: 100%;
+max-width: 100%;
+overflow-x: clip;
+}
+
+body {
+width: 100%;
+max-width: 100%;
+margin: 0;
+overflow-wrap: anywhere;
+}
+
+img,
+video,
+canvas,
+iframe {
+display: block;
+max-width: 100%;
+}
+
+input,
+select,
+textarea,
+button {
+max-width: 100%;
+font: inherit;
+}
+
+input,
+select,
+textarea {
+min-width: 0;
+}
+
+a {
+overflow-wrap: anywhere;
+}
+
+.main,
+.container,
+.main-container,
+.page-container,
+.form-container {
+min-width: 0;
+max-width: 100%;
+}
+
+/* ========================================
+ヘッダー
+======================================== */
+
+.header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 16px;
+min-width: 0;
+}
+
+.header .logo {
+min-width: 0;
+overflow-wrap: anywhere;
+}
+
+.header .menu-button {
+flex-shrink: 0;
+cursor: pointer;
+}
+
+/* ========================================
+グリッド共通
+======================================== */
+
+.clothes-grid,
+.dashboard-grid,
+.analytics-grid,
+.stats-grid,
+.form-grid {
+min-width: 0;
+}
+
+.clothes-grid > *,
+.dashboard-grid > *,
+.analytics-grid > *,
+.stats-grid > *,
+.form-grid > * {
+min-width: 0;
+}
+
+/* 服の画像 */
+.clothes-image {
+min-width: 0;
+overflow: hidden;
+}
+
+.clothes-image img {
+width: 100%;
+height: 100%;
+object-fit: contain;
+}
+
+.clothes-info {
+min-width: 0;
+}
+
+.clothes-info h3,
+.clothes-info p {
+overflow-wrap: anywhere;
+}
+
+/* ========================================
+タブレット
+======================================== */
+
+@media screen and (max-width: 900px) {
+.main,
+.container,
+.main-container,
+.page-container {
+width: 100%;
+max-width: 100%;
+}
+
+.dashboard-grid,
+.analytics-grid,
+.stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.form-container {
+    width: 100%;
+}
+
+.table-container {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    min-width: 600px;
+}
+
+.closet-filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.closet-filters .form-group:first-child {
+    grid-column: 1 / -1;
+}
+
+}
+
+/* ========================================
+スマートフォン
+======================================== */
+
+@media screen and (max-width: 600px) {
+body {
+font-size: 14px;
+}
+
+.main,
+main {
+    width: 100%;
+    max-width: 100%;
+    padding: 16px;
+}
+
+h1 {
+    font-size: 24px;
+    line-height: 1.4;
+}
+
+h2 {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+h3 {
+    line-height: 1.5;
+}
+
+/* ヘッダー */
+.header {
+    gap: 10px;
+    padding: 12px 16px;
+}
+
+.header .logo {
+    font-size: 17px;
+}
+
+.header .menu-button {
+    padding: 10px 12px;
+    font-size: 12px;
+}
+
+/* 服一覧 */
+.clothes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.clothes-card {
+    min-width: 0;
+}
+
+.clothes-info {
+    padding: 10px;
+}
+
+.clothes-info h3 {
+    font-size: 14px;
+}
+
+.clothes-info p {
+    font-size: 12px;
+}
+
+/* 検索・絞り込み */
+.closet-filters {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+}
+
+.closet-filters .form-group:first-child {
+    grid-column: auto;
+}
+
+.closet-filters input,
+.closet-filters select {
+    width: 100%;
+    min-height: 44px;
+}
+
+/* 登録数と登録ボタン */
+.closet-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.closet-toolbar > * {
+    min-width: 0;
+}
+
+/* フォーム */
+.form-grid {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.form-row {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.form-row > * {
+    width: 100%;
+}
+
+.form-container {
+    padding: 16px;
+}
+
+.form-group {
+    min-width: 0;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    min-height: 44px;
+}
+
+/* 画像プレビュー */
+#imagePreview {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+#imagePreview img {
+    max-width: 100%;
+}
+
+/* ボタン */
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.button-group button,
+.button-group a {
+    flex: 1 1 140px;
+    min-height: 44px;
+}
+
+.register-button,
+.button,
+button {
+    max-width: 100%;
+}
+
+/* モーダル */
+.modal-overlay {
+    padding: 12px;
+}
+
+.modal,
+.modal-content,
+.modal-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.modal-content,
+.modal-container {
+    max-height: 90dvh;
+    overflow-y: auto;
+}
+
+/* メニュー */
+.drawer-menu {
+    width: min(300px, 85vw);
+    max-width: 100%;
+}
+
+/* テーブル */
+.table-container {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+/* 統計・ダッシュボード */
+.dashboard-grid,
+.analytics-grid,
+.stats-grid {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+}
+
+/* ========================================
+小型スマートフォン
+======================================== */
+
+@media screen and (max-width: 380px) {
+.main,
+main {
+padding: 12px;
+}
+
+h1 {
+    font-size: 21px;
+}
+
+.header {
+    padding: 10px 12px;
+}
+
+.header .logo {
+    font-size: 15px;
+}
+
+.clothes-grid {
+    gap: 8px;
+}
+
+.clothes-info {
+    padding: 8px;
+}
+
+.clothes-info h3 {
+    font-size: 13px;
+}
+
+.button,
+button {
+    padding: 10px 12px;
+}
+}

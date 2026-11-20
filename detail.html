@@ -1,0 +1,284 @@
+<!-- File: detail.html -->
+<!-- Date: 2026-10-21 -->
+<!-- Creator: K025C2093 吉川蔣 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Digital Closet - 服の詳細</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive-fix.css">
+
+    <style>
+        .logo-link {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .detail-image-area {
+            width: 100%;
+            height: 320px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            background: #f8f8f8;
+        }
+
+        .detail-image-area img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .detail-image-placeholder {
+            padding: 20px;
+            color: #777;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .detail-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .detail-actions button {
+            width: 100%;
+        }
+
+        .delete-button {
+            color: #c53030;
+            border-color: #c53030;
+        }
+
+        .delete-button:hover {
+            background: #fff5f5;
+        }
+
+        .detail-note {
+            margin-top: 8px;
+            color: #777;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 600px) {
+            .detail-image-area {
+                height: 240px;
+                margin-bottom: 20px;
+            }
+
+            .detail-actions {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" class="logo-link">
+                DIGITAL CLOSET
+            </a>
+        </div>
+
+        <button class="menu-button" type="button" aria-label="メニューを開く">☰</button>
+    </header>
+
+    <main class="main">
+
+        <section class="closet-header">
+            <p class="sub-title">CLOTH DETAIL</p>
+            <h1 id="detailTitle">服の詳細</h1>
+            <p>登録した服の情報を確認・編集できます。</p>
+        </section>
+
+        <div class="form-container">
+
+            <div
+                class="detail-image-area"
+                id="detailImage"
+            >
+                <img
+                    id="detailImageElement"
+                    src=""
+                    alt="登録した服の画像"
+                    hidden
+                >
+
+                <span
+                    id="detailImagePlaceholder"
+                    class="detail-image-placeholder"
+                >
+                    画像は登録されていません
+                </span>
+            </div>
+
+            <form id="editClothForm">
+
+                <div class="form-group">
+                    <label for="editImage">画像を切り替える / 追加する</label>
+                    <input
+                        type="file"
+                        id="editImage"
+                        class="form-input"
+                        accept="image/*"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="editName">
+                        服の名称
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editName"
+                        class="form-input"
+                        maxlength="100"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="editCategory">
+                        カテゴリー
+                        <span class="required">*</span>
+                    </label>
+
+                    <select
+                        id="editCategory"
+                        class="form-select"
+                        required
+                    >
+                        <option value="">選択してください</option>
+                        <option value="トップス">トップス</option>
+                        <option value="ボトムス">ボトムス</option>
+                        <option value="アウター">アウター</option>
+                        <option value="シューズ">シューズ</option>
+                        <option value="アクセサリー">アクセサリー</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="editColor">
+                        主な色
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editColor"
+                        class="form-input"
+                        maxlength="50"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="editPattern">柄・デザイン</label>
+
+                    <input
+                        type="text"
+                        id="editPattern"
+                        class="form-input"
+                        maxlength="50"
+                        placeholder="例：無地、ストライプ、チェック"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="editBrand">ブランド</label>
+
+                    <input
+                        type="text"
+                        id="editBrand"
+                        class="form-input"
+                        maxlength="100"
+                        placeholder="例：adidas、UNIQLO"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="editSeason">季節</label>
+
+                    <select
+                        id="editSeason"
+                        class="form-select"
+                    >
+                        <option value="">指定なし</option>
+                        <option value="春">春</option>
+                        <option value="夏">夏</option>
+                        <option value="秋">秋</option>
+                        <option value="冬">冬</option>
+                        <option value="春・秋">春・秋</option>
+                        <option value="オールシーズン">オールシーズン</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="editStyle">テイスト・系統</label>
+
+                    <input
+                        type="text"
+                        id="editStyle"
+                        class="form-input"
+                        maxlength="100"
+                        placeholder="例：カジュアル、きれいめ、ストリート"
+                    >
+                </div>
+
+                <p class="detail-note">
+                    変更した内容は「変更を保存する」を押すと反映されます。
+                </p>
+
+                <div class="detail-actions">
+
+                    <button
+                        type="submit"
+                        class="register-button"
+                    >
+                        変更を保存する
+                    </button>
+
+                    <button
+                        type="button"
+                        id="deleteBtn"
+                        class="cancel-button delete-button"
+                    >
+                        この服を削除する
+                    </button>
+
+                    <button
+                        type="button"
+                        id="backButton"
+                        class="cancel-button"
+                    >
+                        クローゼット一覧へ戻る
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <script src="js/common.js"></script>
+    <script src="js/detail.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!-- ========================================== -->
+<!-- File: purchase-check.html -->
+<!-- Date: 2026-11-09 -->
+<!-- Creator: K025C2093 吉川蔣 -->
+<!-- ========================================== -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Closet - 購入候補リスト</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive-fix.css">
+
+    <style>
+        .purchase-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+
+        .purchase-header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .btn-primary {
+            background-color: #3182ce;
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        /* モーダルデザイン */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 24px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" class="logo-link">DIGITAL CLOSET</a>
+        </div>
+        <nav class="nav-menu">
+            <a href="closet.html" class="nav-link">クローゼット</a>
+            <a href="coordinate.html" class="nav-link">コーディネート</a>
+            <a href="purchase-check.html" class="nav-link active">購入候補リスト</a>
+        </nav>
+        <button class="menu-button" type="button" aria-label="メニューを開く">☰</button>
+    </header>
+
+    <main class="main">
+        <div class="purchase-container">
+            <section class="closet-header" style="margin-bottom: 20px;">
+                <p class="sub-title">PURCHASE LIST</p>
+                <h1>購入候補リスト</h1>
+                <p>気になっている服を保存・管理し、手持ちの服との相性をチェックできます。</p>
+            </section>
+
+            <div class="purchase-header-actions">
+                <p style="color: #666; font-size: 14px;">登録した購入候補の一覧です。</p>
+                <button type="button" id="openAddModalBtn" class="btn-primary">+ 購入候補を追加</button>
+            </div>
+
+            <!-- 購入候補リストが表示される場所 -->
+            <div id="purchaseList"></div>
+
+            <!-- リストが空のときの表示 -->
+            <div id="purchaseEmptyState" style="text-align: center; padding: 40px; color: #777; display: none;">
+                <p>まだ購入候補が登録されていません。</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- 追加・編集モーダル -->
+    <div id="purchaseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">購入候補の追加</h3>
+                <button type="button" id="closeModalBtn" class="close-btn">&times;</button>
+            </div>
+            <form id="purchaseForm">
+                <input type="hidden" id="purchaseItemId">
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label for="purchaseName">商品名・特徴 <span class="required" style="color:red;">*</span></label>
+                    <input type="text" id="purchaseName" class="form-input" placeholder="例: カーキ色のオーバーサイズシャツ" required style="width:100%; padding:8px; margin-top:4px;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label for="purchasePrice">価格 (円)</label>
+                    <input type="number" id="purchasePrice" class="form-input" placeholder="例: 5900" style="width:100%; padding:8px; margin-top:4px;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label for="purchaseCategory">カテゴリー</label>
+                    <select id="purchaseCategory" class="form-select" style="width:100%; padding:8px; margin-top:4px;">
+                        <option value="tops">トップス</option>
+                        <option value="bottoms">ボトムス</option>
+                        <option value="outer">アウター</option>
+                        <option value="shoes">シューズ</option>
+                        <option value="accessories">アクセサリー</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label for="purchaseMemo">メモ・URLなど</label>
+                    <textarea id="purchaseMemo" class="form-input" placeholder="気になっているポイントやショップ名など" style="width:100%; padding:8px; margin-top:4px; height: 60px;"></textarea>
+                </div>
+
+                <!-- 商品画像ファイル選択欄 -->
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="purchaseImage">商品画像</label>
+                    <input type="file" id="purchaseImage" class="form-input" accept="image/*" style="width:100%; padding:8px; margin-top:4px; background: #f7fafc;">
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%;">保存する</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/purchase-check.js"></script>
+</body>
+</html>

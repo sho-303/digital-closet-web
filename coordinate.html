@@ -1,0 +1,161 @@
+<!-- File: coordinate.html -->
+<!-- Date: 2026-10-21 -->
+<!-- Creator: K025C2093 吉川蔣 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Closet - コーディネート</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive-fix.css">
+
+    <style>
+        .coord-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .coord-form-card, .coord-list-card {
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #eee;
+        }
+
+        .coord-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .coord-item-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 16px;
+            background: #fafafa;
+        }
+
+        .coord-item-card h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 6px;
+        }
+
+        .coord-slots {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 13px;
+            color: #444;
+        }
+
+        .delete-coord-btn {
+            margin-top: 12px;
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            width: 100%;
+        }
+
+        .delete-coord-btn:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .coord-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+        <a href="index.html" class="logo-link">DIGITAL CLOSET</a>
+    </div>
+
+ <nav class="nav-menu">
+        <a href="closet.html" class="nav-link">クローゼット</a>
+        <a href="coordinate.html" class="nav-link active">コーディネート</a> <!-- ← 「コーディネート」の方に active を移動！ -->
+        <a href="add-cloth.html" class="nav-link">服を登録</a>
+    </nav>
+
+    <button class="menu-button" type="button" aria-label="メニューを開く">☰</button>
+</header>
+
+    <main class="main">
+        <section class="closet-header">
+            <p class="sub-title">COORDINATE</p>
+            <h1>今日のコーディネート</h1>
+            <p>登録した服を組み合わせて、お気に入りのスタイルを保存・確認できます。</p>
+        </section>
+
+        <div class="coord-layout">
+            <!-- 作成フォーム -->
+            <div class="coord-form-card">
+                <h2>新しいコーデを作成</h2>
+                <form id="coordForm" style="margin-top:16px;">
+                    <div class="form-group">
+                        <label for="coordTitle">コーデのタイトル <span class="required">*</span></label>
+                        <input type="text" id="coordTitle" class="form-input" placeholder="例: 通学カジュアルコーデ" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="selectOuter">アウター</label>
+                        <select id="selectOuter" class="form-select"><option value="">選択なし</option></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="selectTops">トップス</label>
+                        <select id="selectTops" class="form-select"><option value="">選択なし</option></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="selectBottoms">ボトムス</label>
+                        <select id="selectBottoms" class="form-select"><option value="">選択なし</option></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="selectShoes">シューズ</label>
+                        <select id="selectShoes" class="form-select"><option value="">選択なし</option></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="coordSeason">季節</label>
+                        <select id="coordSeason" class="form-select">
+                            <option value="">指定なし</option>
+                            <option value="春">春</option>
+                            <option value="夏">夏</option>
+                            <option value="秋">秋</option>
+                            <option value="冬">冬</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="register-button" style="width:100%;margin-top:12px;">コーデを保存する</button>
+                </form>
+            </div>
+
+            <!-- コーデ一覧 -->
+            <div class="coord-list-card">
+                <h2>保存したコーデ一覧</h2>
+                <div id="coordGrid" class="coord-grid"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/common.js"></script>
+    <script src="js/coordinate.js"></script>
+</body>
+</html>

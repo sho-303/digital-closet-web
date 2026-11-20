@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Closet - AIコーデ提案</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive-fix.css">
+
+<style>
+    .outfit-form {
+        margin-bottom: 24px;
+    }
+
+    .outfit-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .outfit-submit {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    .outfit-result {
+        margin-top: 36px;
+    }
+
+    .outfit-advice-box {
+        padding: 20px;
+        margin-bottom: 24px;
+        border: 1px solid var(--border-color, #ddd);
+        border-radius: 10px;
+    }
+
+    .outfit-advice-box h3 {
+        margin-top: 0;
+    }
+
+    .outfit-advice-box p {
+        line-height: 1.8;
+        white-space: pre-line;
+    }
+
+    .outfit-result-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .outfit-card {
+        min-width: 0;
+        padding: 14px;
+        border: 1px solid var(--border-color, #ddd);
+        border-radius: 10px;
+    }
+
+    .outfit-card-image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        background: var(--surface-color, #f5f5f5);
+        border-radius: 6px;
+    }
+
+    .outfit-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .outfit-card-image span {
+        font-size: 13px;
+    }
+
+    .outfit-card h3 {
+        margin: 12px 0 8px;
+        font-size: 16px;
+        overflow-wrap: anywhere;
+    }
+
+    .outfit-card p {
+        margin: 5px 0;
+        font-size: 13px;
+        overflow-wrap: anywhere;
+    }
+
+    .outfit-result-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .outfit-result-actions button,
+    .outfit-result-actions a {
+        flex: 1 1 180px;
+        text-align: center;
+    }
+
+    .outfit-status {
+        margin: 16px 0;
+        line-height: 1.7;
+    }
+
+    @media screen and (max-width: 700px) {
+        .outfit-result-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .outfit-card {
+            padding: 10px;
+        }
+
+        .outfit-card-image {
+            height: 160px;
+        }
+    }
+
+    @media screen and (max-width: 420px) {
+        .outfit-result-grid {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .outfit-card-image {
+            height: 220px;
+        }
+    }
+</style>
+
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+        <a href="index.html" style="text-decoration: none; color: inherit;">
+            DIGITAL CLOSET
+        </a>
+    </div>
+
+   <button class="menu-button" type="button" aria-label="メニューを開く">☰</button>
+</header>
+
+<main class="main">
+
+    <section class="closet-header">
+        <p class="sub-title">AI OUTFIT SUGGESTION</p>
+        <h1>AIコーデ提案</h1>
+        <p>手持ちの服から、条件に合うコーディネートを提案します。</p>
+    </section>
+
+    <section class="form-container outfit-form">
+        <form id="aiOutfitForm">
+
+            <div class="form-group">
+                <label for="outfitSeason">季節</label>
+                <select id="outfitSeason" class="form-select">
+                    <option value="指定なし">指定なし</option>
+                    <option value="spring">春</option>
+                    <option value="summer">夏</option>
+                    <option value="autumn">秋</option>
+                    <option value="winter">冬</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="outfitScene">利用シーン</label>
+                <select id="outfitScene" class="form-select">
+                    <option value="普段使い">普段使い</option>
+                    <option value="通学">通学</option>
+                    <option value="デート">デート</option>
+                    <option value="友達との外出">友達との外出</option>
+                    <option value="ビジネス">ビジネス</option>
+                    <option value="旅行">旅行</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="outfitTaste">スタイル・雰囲気</label>
+                <select id="outfitTaste" class="form-select">
+                    <option value="おまかせ">おまかせ</option>
+                    <option value="カジュアル">カジュアル</option>
+                    <option value="きれいめ">きれいめ</option>
+                    <option value="ストリート">ストリート</option>
+                    <option value="シンプル">シンプル</option>
+                    <option value="韓国系">韓国系</option>
+                </select>
+            </div>
+
+            <button type="submit" id="generateOutfitBtn" class="register-button outfit-submit">
+                コーデを提案する
+            </button>
+
+        </form>
+    </section>
+
+    <p id="outfitStatus" class="outfit-status" aria-live="polite"></p>
+
+    <section id="outfitResultArea" class="outfit-result" hidden>
+
+        <section class="closet-header">
+            <p class="sub-title">RECOMMENDATION</p>
+            <h2 id="outfitTitle">提案されたコーディネート</h2>
+        </section>
+
+        <div class="outfit-advice-box">
+            <h3>コーディネートのポイント</h3>
+            <p id="outfitAdvice"></p>
+        </div>
+
+        <div id="outfitItemsGrid" class="outfit-result-grid"></div>
+
+        <div class="outfit-result-actions">
+            <button type="button" id="retryOutfitBtn" class="register-button">
+                別のコーデを提案する
+            </button>
+
+            <a href="add-cloth.html" class="register-button">
+                服を追加する
+            </a>
+        </div>
+
+    </section>
+
+</main>
+
+<script src="js/common.js"></script>
+<script src="js/ai-outfit.js"></script>
+
+</body>
+</html>

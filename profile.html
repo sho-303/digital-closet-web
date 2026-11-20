@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Closet - マイページ・設定</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive-fix.css">
+    <style>
+        .logo-link {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .setting-section {
+            background-color: var(--card-bg, #ffffff);
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .setting-section h2 {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: #2d3748;
+            margin: 0 0 16px 0;
+            text-transform: uppercase;
+        }
+
+        .setting-section p.description {
+            font-size: 12px;
+            color: #718096;
+            margin: -8px 0 16px 0;
+            line-height: 1.7;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: #4a5568;
+            margin-bottom: 6px;
+            letter-spacing: 0.02em;
+        }
+
+        /* スイッチ（トグル）デザイン */
+        .toggle-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toggle-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        #toggleSlider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e0;
+            transition: .25s ease;
+            border-radius: 22px;
+        }
+
+        #toggleSlider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #ffffff;
+            transition: .25s ease;
+            border-radius: 50%;
+        }
+
+        #darkModeToggle:checked + #toggleSlider {
+            background-color: #2b6cb0;
+        }
+
+        #darkModeToggle:checked + #toggleSlider:before {
+            transform: translateX(18px);
+        }
+
+        /* ボタンデザインの調整 */
+        .btn-primary {
+            width: 100%;
+            padding: 11px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: #ffffff;
+            background-color: #2d3748;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #1a202c;
+        }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 11px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: #2d3748;
+            background-color: #ffffff;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f7fafc;
+            border-color: #a0aec0;
+        }
+
+        .btn-danger {
+            width: 100%;
+            padding: 11px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: #e53e3e;
+            background-color: #ffffff;
+            border: 1px solid #fed7d7;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .btn-danger:hover {
+            background-color: #fff5f5;
+            border-color: #feb2b2;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" class="logo-link">
+                DIGITAL CLOSET
+            </a>
+        </div>
+        <button class="menu-button" type="button" aria-label="メニューを開く">☰</button>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="main" style="max-width: 480px; margin: 32px auto;">
+
+        <!-- ページタイトル -->
+        <section class="closet-header">
+            <p class="sub-title">USER PROFILE & SETTINGS</p>
+            <h1>設定</h1>
+            <p>アカウント情報や表示、AI診断データの管理を行います。</p>
+        </section>
+
+        <!-- ユーザー基本情報編集 -->
+        <section class="setting-section">
+            <h2>ユーザー情報</h2>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="profName">ユーザー名</label>
+                    <input type="text" id="profName" class="form-input" placeholder="名前を入力" required>
+                </div>
+                <div class="form-group">
+                    <label for="profEmail">メールアドレス</label>
+                    <input type="email" id="profEmail" class="form-input" placeholder="example@email.com" required>
+                </div>
+                <button type="submit" class="btn-primary" style="margin-top: 4px;">
+                    変更を保存
+                </button>
+            </form>
+        </section>
+
+        <!-- アプリ表示設定 -->
+        <section class="setting-section">
+            <h2>表示設定</h2>
+            <div class="toggle-container">
+                <span class="toggle-label">ダークモード</span>
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span id="toggleSlider"></span>
+                </label>
+            </div>
+        </section>
+
+        <!-- 診断データの手動再設定 -->
+        <section class="setting-section">
+            <h2>骨格・顔タイプ設定</h2>
+            <p class="description">AI診断結果の手動変更・更新ができます</p>
+            
+            <div class="form-group">
+                <label for="bodyType">骨格タイプ</label>
+                <select id="bodyType" class="form-select">
+                    <option value="未設定">未設定</option>
+                    <option value="ストレート">ストレート</option>
+                    <option value="ウェーブ">ウェーブ</option>
+                    <option value="ナチュラル">ナチュラル</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="margin-top: 16px;">
+                <label for="faceType">顔タイプ</label>
+                <select id="faceType" class="form-select">
+                    <option value="未設定">未設定</option>
+                    <option value="フレッシュ">フレッシュ</option>
+                    <option value="キュート">キュート</option>
+                    <option value="クール">クール</option>
+                    <option value="エレガント">エレガント</option>
+                </select>
+            </div>
+
+            <button type="button" id="saveDiagnosisBtn" class="btn-primary" style="margin-top: 16px;">
+                診断タイプを保存
+            </button>
+        </section>
+
+        <!-- データ管理 -->
+        <section class="setting-section">
+            <h2>データ管理</h2>
+            <p class="description">登録されたクローゼット情報や設定をファイルとしてバックアップします</p>
+            <button type="button" id="exportDataBtn" class="btn-secondary">
+                データ書き出し (JSON)
+            </button>
+        </section>
+
+        <!-- アカウント操作 -->
+        <section class="setting-section">
+            <h2>アカウント</h2>
+            <button type="button" id="profileLogoutBtn" class="btn-danger">
+                ログアウト
+            </button>
+        </section>
+
+    </main>
+
+    <!-- JavaScript -->
+    <script src="js/common.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>

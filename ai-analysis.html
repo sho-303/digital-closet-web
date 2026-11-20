@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Closet - クローゼット分析</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 共通ヘッダーの強制レイアウト安定化 */
+        header.header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        header.header .logo a {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: #1a202c;
+            text-decoration: none;
+        }
+
+        header.header .menu-button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #2d3748;
+            padding: 4px 8px;
+        }
+
+        /* ページ固有のスタイル */
+        .closet-header {
+            margin-bottom: 24px;
+        }
+
+        .closet-header .sub-title {
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            color: #718096;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .closet-header h1 {
+            font-size: 22px;
+            font-weight: 500;
+            color: #1a202c;
+            margin: 0;
+        }
+
+        .analysis-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .analysis-card h2 {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: #2d3748;
+            margin: 0 0 16px 0;
+            text-transform: uppercase;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .stat-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stat-box {
+            background-color: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-top: 4px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #718096;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 11px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #ffffff;
+            background-color: #2d3748;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #1a202c;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html">Digital Closet</a>
+        </div>
+        <button type="button" class="menu-button" aria-label="メニューを開く">☰</button>
+    </header>
+
+    <!-- メイン -->
+    <main class="main" style="max-width: 600px; margin: 32px auto; padding: 0 16px; box-sizing: border-box;">
+
+        <div class="closet-header">
+            <p class="sub-title">CLOSET ANALYSIS</p>
+            <h1>クローゼット分析</h1>
+            <p style="font-size: 13px; color: #718096; margin-top: 4px;">登録した服の構成や傾向を確認できます。</p>
+        </div>
+
+        <button type="button" id="analyzeBtn" class="btn-primary">
+            クローゼットを分析する
+        </button>
+
+        <!-- 所有アイテムのサマリー -->
+        <section class="analysis-card">
+            <h2>所有アイテムのサマリー</h2>
+            <div class="stat-grid" id="summaryGrid">
+                <div class="stat-box">
+                    <div class="stat-label">総所有数</div>
+                    <div class="stat-value" id="totalItemsCount">0着</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">最多カテゴリ</div>
+                    <div class="stat-value" id="topCategory">未登録</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">メインカラー</div>
+                    <div class="stat-value" id="topColor">未登録</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">登録ブランド数</div>
+                    <div class="stat-value" id="totalBrands">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">春夏秋冬の登録状況</div>
+                    <div class="stat-value" id="seasonStatus">0 / 4</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">ブランド未設定</div>
+                    <div class="stat-value" id="noBrandCount">0着</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- カテゴリ構成 -->
+        <section class="analysis-card">
+            <h2>カテゴリ構成</h2>
+            <div id="categoryBreakdownList" style="font-size: 13px; color: #4a5568;">
+                <p style="color: #a0aec0; margin: 0;">データがありません</p>
+            </div>
+        </section>
+
+        <!-- カラー構成 -->
+        <section class="analysis-card">
+            <h2>カラー構成</h2>
+            <div id="colorTrendContent" style="font-size: 13px; color: #4a5568;">
+                <p style="color: #a0aec0; margin: 0;">データがありません</p>
+            </div>
+        </section>
+
+        <!-- 季節別の登録状況 -->
+        <section class="analysis-card">
+            <h2>季節別の登録状況</h2>
+            <div id="seasonBreakdownContent" style="font-size: 13px; color: #4a5568;">
+                <p style="color: #a0aec0; margin: 0;">データがありません</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="js/common.js"></script>
+    <script src="js/ai-analysis.js"></script>
+</body>
+</html>

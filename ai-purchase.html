@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Digital Closet - 購入候補チェック</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive-fix.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" class="logo-link">DIGITAL CLOSET</a>
+        </div>
+
+        <button class="menu-button" type="button" aria-label="メニューを開く">☰</button>
+    </header>
+
+    <main class="main">
+
+        <section class="closet-header">
+            <p class="sub-title">PURCHASE CHECK</p>
+            <h1>購入候補チェック</h1>
+            <p>購入を迷っている服と手持ちの服を比較して、着回しやすさを確認しましょう。</p>
+        </section>
+
+        <section class="form-container">
+            <form id="purchaseCheckForm">
+
+                <div class="form-group">
+                    <label for="purchaseImageInput">購入検討中の服の写真</label>
+
+                    <div
+                        id="purchaseImagePreview"
+                        class="clothes-image purchase-image-preview"
+                        role="button"
+                        tabindex="0"
+                        aria-label="購入候補の画像を選択"
+                    >
+                        <div class="purchase-upload-guide">
+                            <p>画像を選択</p>
+                            <span>クリックまたはドラッグ＆ドロップ</span>
+                            <span>JPEG・PNG・WebPなど / 3MB以下</span>
+                        </div>
+                    </div>
+
+                    <input
+                        type="file"
+                        id="purchaseImageInput"
+                        accept="image/*"
+                        hidden
+                    >
+
+                    <p class="form-help">
+                        写真は任意です。写真がなくてもチェックできます。
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label for="purchaseItemName">
+                        購入候補の名称・特徴
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="purchaseItemName"
+                        class="form-input"
+                        placeholder="例：カーキ色のオーバーサイズシャツ"
+                        maxlength="200"
+                        autocomplete="off"
+                        required
+                    >
+
+                    <p class="form-help">
+                        色・カテゴリー・柄なども入力すると、より参考になる結果を表示できます。
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label for="purchaseCategory">カテゴリー</label>
+
+                    <select id="purchaseCategory" class="form-select">
+                        <option value="">指定なし</option>
+                        <option value="tops">トップス</option>
+                        <option value="bottoms">ボトムス</option>
+                        <option value="outer">アウター</option>
+                        <option value="shoes">シューズ</option>
+                        <option value="accessories">アクセサリー</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="purchaseColor">主な色</label>
+
+                    <select id="purchaseColor" class="form-select">
+                        <option value="">指定なし</option>
+                        <option value="ブラック">ブラック</option>
+                        <option value="ホワイト">ホワイト</option>
+                        <option value="グレー">グレー</option>
+                        <option value="ベージュ">ベージュ</option>
+                        <option value="ブラウン">ブラウン</option>
+                        <option value="カーキ">カーキ</option>
+                        <option value="ネイビー">ネイビー</option>
+                        <option value="ブルー">ブルー</option>
+                        <option value="レッド">レッド</option>
+                        <option value="ピンク">ピンク</option>
+                        <option value="グリーン">グリーン</option>
+                        <option value="イエロー">イエロー</option>
+                        <option value="パープル">パープル</option>
+                        <option value="オレンジ">オレンジ</option>
+                        <option value="その他">その他</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button
+                        type="submit"
+                        id="checkPurchaseBtn"
+                        class="register-button"
+                    >
+                        相性をチェックする
+                    </button>
+                </div>
+
+            </form>
+        </section>
+
+        <section
+            id="purchaseResultArea"
+            class="purchase-result"
+            hidden
+            aria-live="polite"
+        >
+            <div class="purchase-result-summary">
+                <p class="sub-title">CHECK RESULT</p>
+                <h2 id="matchScoreTitle">チェック結果</h2>
+                <p id="purchaseAdvice"></p>
+                <p id="purchaseScoreDescription" class="form-help"></p>
+            </div>
+
+            <section class="purchase-result-section">
+                <h3>手持ち服との組み合わせ候補</h3>
+                <p id="matchItemsMessage"></p>
+                <div id="matchItemsGrid" class="clothes-grid"></div>
+            </section>
+
+            <section class="purchase-result-section">
+                <h3>重複チェック</h3>
+                <p id="duplicateAdvice"></p>
+            </section>
+
+            <section class="purchase-result-section">
+                <h3>購入前のアドバイス</h3>
+                <ul id="purchaseTips"></ul>
+            </section>
+
+            <button
+                type="button"
+                id="retryPurchaseBtn"
+                class="cancel-button"
+            >
+                条件を変更して再チェック
+            </button>
+        </section>
+
+    </main>
+
+    <style>
+        .logo-link {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .purchase-image-preview {
+            min-height: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px dashed #999;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #f8f8f8;
+        }
+
+        .purchase-image-preview:focus-visible {
+            outline: 2px solid #333;
+            outline-offset: 3px;
+        }
+
+        .purchase-image-preview.dragging {
+            border: 2px dashed #222;
+            background: #ededed;
+        }
+
+        .purchase-upload-guide {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 16px;
+            text-align: center;
+            color: #555;
+        }
+
+        .purchase-upload-guide p {
+            margin: 0;
+            font-weight: 600;
+            color: #222;
+        }
+
+        .purchase-upload-guide span {
+            font-size: 12px;
+            overflow-wrap: anywhere;
+        }
+
+        .purchase-result {
+            margin-top: 32px;
+        }
+
+        .purchase-result-summary,
+        .purchase-result-section {
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .purchase-result-summary h2 {
+            margin: 8px 0 12px;
+        }
+
+        .purchase-result-section h3 {
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        .purchase-result-section p,
+        .purchase-result-summary p {
+            line-height: 1.8;
+        }
+
+        .purchase-result-section ul {
+            padding-left: 22px;
+            line-height: 1.9;
+        }
+
+        .purchase-result .clothes-grid {
+            margin-top: 16px;
+        }
+
+        .purchase-match-card {
+            min-width: 0;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .purchase-match-card h4 {
+            margin: 10px 0 6px;
+        }
+
+        .purchase-match-card p {
+            margin: 4px 0;
+            font-size: 13px;
+        }
+
+        .purchase-match-image {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #f6f6f6;
+            border-radius: 6px;
+        }
+
+        .purchase-match-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .purchase-result .cancel-button {
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 600px) {
+            .purchase-result-summary,
+            .purchase-result-section {
+                padding: 16px;
+            }
+
+            .purchase-image-preview {
+                height: 180px;
+                min-height: 180px;
+            }
+
+            .purchase-match-image {
+                height: 120px;
+            }
+        }
+    </style>
+
+    <script src="js/common.js"></script>
+    <script src="js/ai-purchase.js"></script>
+
+</body>
+</html>

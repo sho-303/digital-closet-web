@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Closet - ログイン</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive-fix.css">
+    <style>
+        .logo-link {
+            color: inherit;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" class="logo-link">DIGITAL CLOSET</a>
+        </div>
+        <button type="button" class="menu-button" aria-label="メニューを開く">☰</button>
+    </header>
+
+    <!-- メイン -->
+    <main class="main" style="max-width: 400px; margin: 40px auto; padding: 0 16px; box-sizing: border-box;">
+
+        <section class="closet-header" style="text-align: center;">
+            <p class="sub-title">WELCOME BACK</p>
+            <h1 id="formTitle">ログイン</h1>
+        </section>
+
+        <!-- ログインフォーム -->
+        <div class="form-container" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px;">
+            <form id="authForm">
+                <div class="form-group">
+                    <label for="email">メールアドレス <span class="required">*</span></label>
+                    <input type="email" id="email" class="form-input" placeholder="example@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">パスワード <span class="required">*</span></label>
+                    <input type="password" id="password" class="form-input" placeholder="6〜12文字" minlength="6" maxlength="12" required>
+                </div>
+
+                <button type="submit" id="authSubmitBtn" class="btn-primary" style="width: 100%; margin-top: 8px; background-color: #3182ce;">
+                    ログイン
+                </button>
+            </form>
+
+            <div style="text-align: center; margin-top: 20px; font-size: 13px; color: #4a5568;">
+                <span>アカウントをお持ちでないですか？</span>
+                <!-- signup.htmlへ確実に遷移させるリンクボタン -->
+                <a href="signup.html" style="color: #3182ce; font-weight: bold; cursor: pointer; text-decoration: underline; margin-left: 4px;">
+                    新規会員登録
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="js/common.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

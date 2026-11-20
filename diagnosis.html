@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Closet - AIリアルタイム顔認証・骨格診断</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit;">Digital Closet</a>
+        </div>
+        <button class="menu-button" type="button" aria-label="メニューを開く">☰</button>
+    </header>
+
+    <!-- メイン -->
+    <main class="main">
+
+        <section class="closet-header">
+            <p class="sub-title">AI FACE & BODY DIAGNOSIS</p>
+            <h1>カメラ顔認証・骨格診断</h1>
+        </section>
+
+        <!-- 診断フォーム -->
+        <div class="form-container" style="margin-bottom: 24px;">
+            <form id="diagnosisForm">
+                
+                <!-- カメラ起動・リアルタイム顔解析エリア -->
+                <div class="form-group">
+                    <label>カメラによるリアルタイム顔タイプ解析</label>
+                    <div id="cameraContainer" style="position: relative; width: 100%; height: 260px; background-color: #1a202c; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff;">
+                        <!-- カメラ映像を描画するvideoタグ -->
+                        <video id="webcam" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover; display: none;"></video>
+                        <!-- 顔認証用オーバーレイ枠 -->
+                        <div id="faceGuide" style="display: none; position: absolute; width: 180px; height: 220px; border: 2px dashed #63b3ed; border-radius: 50%; box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.4); pointer-events: none;"></div>
+                        <!-- スキャン枠（アニメーション用） -->
+                        <div id="scanLine" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background-color: #3182ce; box-shadow: 0 0 8px #63b3ed;"></div>
+                        
+                        <!-- 初期表示プレースホルダー -->
+                        <div id="cameraPlaceholder" style="text-align: center; padding: 20px;">
+                            <p style="font-size: 28px; margin-bottom: 8px;">📷</p>
+                            <p style="font-size: 13px; color: #a0aec0;">カメラを起動して顔の黄金比・輪郭をAIスキャンします</p>
+                            <button type="button" id="startCameraBtn" class="register-button" style="margin-top: 12px; background-color: #4a5568; font-size: 12px; padding: 8px 16px;">カメラを起動する</button>
+                        </div>
+                    </div>
+                    <canvas id="photoCanvas" style="display: none;"></canvas>
+                </div>
+
+                <div class="form-group">
+                    <label for="bodyFeature">体型・骨格のセルフ特徴 <span class="required">*</span></label>
+                    <select id="bodyFeature" class="form-select" required>
+                        <option value="">選択してください</option>
+                        <option value="straight">首が短め / 上半身に厚みがある / 手足が小さめ（ストレート）</option>
+                        <option value="wave">首が長め / 下半身にボリュームが出やすい / 華奢（ウェーブ）</option>
+                        <option value="natural">関節や骨感が目立つ / フレーム感がある / 手足が大きい（ナチュラル）</option>
+                        <option value="unknown">よく分からない（AI自動判別）</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="faceImpression">なりたい・好みのスタイル</label>
+                    <input type="text" id="faceImpression" class="form-input" placeholder="例: 大人っぽい、柔らかい、ストリート、個性的">
+                </div>
+
+                <button type="submit" id="startDiagnosisBtn" class="register-button" style="background-color: #2b6cb0;">
+                    ✨ カメラ画像と骨格から詳細診断する
+                </button>
+            </form>
+        </div>
+
+        <!-- 診断結果表示エリア -->
+        <div id="diagnosisResultArea" style="display: none;">
+            <section class="closet-header" style="margin-top: 30px;">
+                <p class="sub-title">DIAGNOSIS RESULT</p>
+                <h2>AI詳細診断レポート</h2>
+            </section>
+
+            <!-- 撮影した顔画像 ＆ 顔解析データ -->
+            <div class="form-container" style="margin-bottom: 16px; background-color: #ffffff;">
+                <h3 style="margin-bottom: 12px;">👤 顔タイプ解析（顔認証データ）</h3>
+                <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+                    <img id="capturedFaceImg" style="width: 100px; height: 120px; object-fit: cover; border-radius: 8px; border: 2px solid #e2e8f0; background: #f7fafc;">
+                    <div style="flex: 1; min-width: 180px;">
+                        <p style="font-weight: bold; color: #2b6cb0; font-size: 16px;" id="faceTypeTitle">解析中...</p>
+                        <p style="font-size: 13px; color: #4a5568; margin-top: 4px;" id="faceDetailMetrics"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 骨格タイプ結果 -->
+            <div class="form-container" style="margin-bottom: 16px; background-color: #ebf8ff; border-left: 4px solid #3182ce;">
+                <h3 style="color: #2b6cb0; margin-bottom: 8px;" id="skeletonResult">骨格タイプ: 診断中</h3>
+                <p id="skeletonDesc" style="font-size: 14px; color: #2d3748; line-height: 1.6;"></p>
+            </div>
+
+            <!-- 総合ファッションスタイル提案 -->
+            <div class="form-container" style="margin-bottom: 20px; background-color: #faf5ff; border-left: 4px solid #805ad5;">
+                <h3 style="color: #553c9a; margin-bottom: 8px;" id="styleTitle">おすすめのファッション系統</h3>
+                <p id="styleDesc" style="font-size: 14px; color: #2d3748; line-height: 1.6;"></p>
+            </div>
+
+            <!-- おすすめアイテムカテゴリ -->
+            <div class="form-container">
+                <h4 style="margin-bottom: 12px;">💡 あなたの顔立ち＆骨格にハマる勝負アイテム</h4>
+                <ul id="recommendedItemsList" style="padding-left: 20px; font-size: 14px; color: #4a5568; line-height: 1.8;">
+                </ul>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="js/common.js"></script>
+    <script src="js/diagnosis.js"></script>
+</body>
+</html>

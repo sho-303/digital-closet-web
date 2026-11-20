@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Digital Closet - 服を登録する</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive-fix.css">
+
+    <style>
+        .logo-link {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .image-upload-area {
+            min-height: 220px;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px dashed #999;
+            border-radius: 8px;
+            background: #f8f8f8;
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .image-upload-area:hover,
+        .image-upload-area:focus-visible {
+            border-color: #222;
+            outline: 2px solid #777;
+            outline-offset: 2px;
+        }
+
+        .image-upload-area.dragging {
+            border: 2px dashed #222;
+            background: #ededed;
+        }
+
+        .upload-guide {
+            padding: 20px;
+            text-align: center;
+            color: #555;
+        }
+
+        .upload-title {
+            margin: 0 0 10px;
+            color: #222;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .upload-guide p {
+            overflow-wrap: anywhere;
+        }
+
+        .upload-note,
+        .form-help {
+            color: #777;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .form-help {
+            margin-top: 8px;
+        }
+
+        .ai-classify-button {
+            width: 100%;
+            margin-top: 12px;
+            background: #444;
+            color: #fff;
+        }
+
+        .ai-classify-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.45;
+        }
+
+        .form-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .form-actions button {
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .image-upload-area {
+                min-height: 180px;
+                height: 180px;
+            }
+
+            .upload-guide {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ヘッダー -->
+<header class="header">
+    <div class="logo">
+        <a href="index.html" class="logo-link">DIGITAL CLOSET</a>
+    </div>
+
+    <nav class="nav-menu">
+        <a href="closet.html" class="nav-link">クローゼット</a>
+        <a href="coordinate.html" class="nav-link">コーディネート</a>
+        <a href="add-cloth.html" class="nav-link active">服を登録</a>
+    </nav>
+
+    <button class="menu-button" type="button" aria-label="メニューを開く">☰</button>
+</header>
+
+    <!-- メインコンテンツ -->
+    <main class="main">
+
+        <!-- ページタイトル -->
+        <section class="closet-header">
+            <p class="sub-title">NEW ITEM</p>
+            <h1>服を登録する</h1>
+            <p>
+                お気に入りの服を登録して、
+                自分だけのクローゼットを作りましょう。
+            </p>
+        </section>
+
+        <!-- 登録フォーム -->
+        <div class="form-container">
+
+            <form id="addClothForm">
+
+                <!-- 画像アップロード -->
+                <div class="form-group">
+                    <label for="imageInput">
+                        服の写真
+                    </label>
+
+                    <div
+                        id="imagePreview"
+                        class="clothes-image image-upload-area"
+                        role="button"
+                        tabindex="0"
+                        aria-label="クリックまたはドラッグ＆ドロップで服の画像を選択"
+                    >
+                        <div class="upload-guide">
+                            <p class="upload-title">画像を選択</p>
+                            <p>
+                                クリック、または画像をここに
+                                ドラッグ＆ドロップ
+                            </p>
+                            <p class="upload-note">
+                                対応形式：JPEG・PNG・WebPなど / 3MB以下
+                            </p>
+                        </div>
+                    </div>
+
+                    <input
+                        type="file"
+                        id="imageInput"
+                        accept="image/*"
+                        hidden
+                    >
+
+                    <p class="form-help">
+                        画像がなくても服を登録できます。
+                    </p>
+
+                    <!-- 画像の色推定 -->
+                    <button
+                        type="button"
+                        id="aiClassifyBtn"
+                        class="register-button ai-classify-button"
+                        disabled
+                    >
+                        画像から主な色を推定
+                    </button>
+
+                    <p class="form-help">
+                        画像から主な色を推定します。
+                        カテゴリー・ブランド・季節などは
+                        手動で入力してください。
+                    </p>
+                </div>
+
+                <!-- 服の名称 -->
+                <div class="form-group">
+                    <label for="clothName">
+                        服の名称
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="clothName"
+                        class="form-input"
+                        placeholder="例：白のオーバーサイズTシャツ"
+                        maxlength="100"
+                        autocomplete="off"
+                        required
+                    >
+                </div>
+
+                <!-- カテゴリー -->
+                <div class="form-group">
+                    <label for="category">
+                        カテゴリー
+                        <span class="required">*</span>
+                    </label>
+
+                    <select
+                        id="category"
+                        class="form-select"
+                        required
+                    >
+                        <option value="">選択してください</option>
+                        <option value="トップス">トップス</option>
+                        <option value="ボトムス">ボトムス</option>
+                        <option value="アウター">アウター</option>
+                        <option value="シューズ">シューズ</option>
+                        <option value="アクセサリー">アクセサリー</option>
+                    </select>
+                </div>
+
+                <!-- 色 -->
+                <div class="form-group">
+                    <label for="color">
+                        主な色
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="color"
+                        class="form-input"
+                        placeholder="例：ホワイト、ブラック、ブラウン"
+                        maxlength="50"
+                        autocomplete="off"
+                        required
+                    >
+                </div>
+
+                <!-- 柄・デザイン -->
+                <div class="form-group">
+                    <label for="pattern">
+                        柄・デザイン
+                    </label>
+
+                    <input
+                        type="text"
+                        id="pattern"
+                        class="form-input"
+                        placeholder="例：無地、ストライプ、チェック"
+                        maxlength="50"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <!-- ブランド -->
+                <div class="form-group">
+                    <label for="brand">
+                        ブランド
+                    </label>
+
+                    <input
+                        type="text"
+                        id="brand"
+                        class="form-input"
+                        placeholder="例：adidas、UNIQLO"
+                        maxlength="100"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <!-- 季節 -->
+                <div class="form-group">
+                    <label for="season">
+                        季節
+                    </label>
+
+                    <select
+                        id="season"
+                        class="form-select"
+                    >
+                        <option value="">指定なし</option>
+                        <option value="春">春</option>
+                        <option value="夏">夏</option>
+                        <option value="秋">秋</option>
+                        <option value="冬">冬</option>
+                        <option value="春・秋">春・秋</option>
+                        <option value="オールシーズン">オールシーズン</option>
+                    </select>
+                </div>
+
+                <!-- テイスト・系統 -->
+                <div class="form-group">
+                    <label for="style">
+                        テイスト・系統
+                    </label>
+
+                    <input
+                        type="text"
+                        id="style"
+                        class="form-input"
+                        placeholder="例：カジュアル、きれいめ、ストリート"
+                        maxlength="100"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <!-- ボタン -->
+                <div class="form-actions">
+                    <button
+                        type="submit"
+                        class="register-button"
+                    >
+                        登録する
+                    </button>
+
+                    <button
+                        type="button"
+                        class="cancel-button"
+                        id="cancelButton"
+                    >
+                        キャンセル
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <!-- JavaScript -->
+    <script src="js/common.js"></script>
+    <script src="js/add-cloth.js"></script>
+
+</body>
+</html>

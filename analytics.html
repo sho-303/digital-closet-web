@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Closet - クローゼット分析</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive-fix.css">
+    <style>
+        .logo-link {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .analysis-button {
+            margin-bottom: 24px;
+        }
+
+        .analysis-results {
+            display: grid;
+            gap: 20px;
+        }
+
+        .analysis-card {
+            padding: 22px;
+            background: var(--card-bg, #ffffff);
+            border: 1px solid var(--border-color, #e5e5e5);
+            border-radius: 10px;
+        }
+
+        .analysis-card h2,
+        .analysis-card h3 {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: #2d3748;
+            text-transform: uppercase;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .summary-item {
+            min-width: 0;
+            padding: 16px 10px;
+            text-align: center;
+            background: var(--secondary-bg, #f7f7f7);
+            border-radius: 8px;
+        }
+
+        .summary-label {
+            margin: 0 0 8px;
+            font-size: 13px;
+            color: var(--muted-text, #777777);
+        }
+
+        .summary-value {
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+            color: #1a202c;
+        }
+
+        .analysis-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .analysis-row {
+            display: grid;
+            gap: 7px;
+        }
+
+        .analysis-row-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .analysis-bar {
+            width: 100%;
+            height: 9px;
+            overflow: hidden;
+            background: var(--secondary-bg, #eeeeee);
+            border-radius: 99px;
+        }
+
+        .analysis-bar-fill {
+            height: 100%;
+            background: var(--accent-color, #555555);
+            border-radius: 99px;
+            transition: width 0.3s ease;
+        }
+
+        .analysis-comment {
+            line-height: 1.8;
+            white-space: pre-line;
+            overflow-wrap: anywhere;
+            color: #4a5568;
+            font-size: 14px;
+        }
+
+        .analysis-note {
+            margin-top: 12px;
+            color: var(--muted-text, #777777);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .analysis-empty {
+            padding: 24px 12px;
+            text-align: center;
+            background: var(--secondary-bg, #f7f7f7);
+            border-radius: 8px;
+            line-height: 1.8;
+            color: #718096;
+        }
+
+        @media (max-width: 600px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-item {
+                padding: 14px;
+            }
+
+            .summary-value {
+                font-size: 18px;
+            }
+
+            .analysis-card {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" class="logo-link">DIGITAL CLOSET</a>
+        </div>
+        <button class="menu-button" type="button" aria-label="メニューを開く">☰</button>
+    </header>
+
+    <!-- メイン -->
+    <main class="main">
+        <section class="closet-header">
+            <p class="sub-title">CLOSET ANALYSIS</p>
+            <h1>クローゼット分析</h1>
+            <p>登録した服の構成や傾向を確認できます。</p>
+        </section>
+
+        <button id="runAnalysisBtn" class="register-button analysis-button" type="button">
+            クローゼットを分析する
+        </button>
+
+        <div id="analysisResultArea" class="analysis-results" hidden>
+
+            <section class="analysis-card">
+                <h2>所有アイテムのサマリー</h2>
+
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <p class="summary-label">総所有数</p>
+                        <p class="summary-value" id="totalCount">0着</p>
+                    </div>
+
+                    <div class="summary-item">
+                        <p class="summary-label">最多カテゴリ</p>
+                        <p class="summary-value" id="topCategory">未登録</p>
+                    </div>
+
+                    <div class="summary-item">
+                        <p class="summary-label">メインカラー</p>
+                        <p class="summary-value" id="topColor">未登録</p>
+                    </div>
+
+                    <div class="summary-item">
+                        <p class="summary-label">登録ブランド数</p>
+                        <p class="summary-value" id="brandCount">0</p>
+                    </div>
+
+                    <div class="summary-item">
+                        <p class="summary-label">春夏秋冬の登録状況</p>
+                        <p class="summary-value" id="seasonCoverage">0 / 4</p>
+                    </div>
+
+                    <div class="summary-item">
+                        <p class="summary-label">ブランド未設定</p>
+                        <p class="summary-value" id="unknownBrandCount">0着</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="analysis-card">
+                <h2>カテゴリ構成</h2>
+                <div id="categoryAnalysis" class="analysis-list"></div>
+            </section>
+
+            <section class="analysis-card">
+                <h2>カラー構成</h2>
+                <div id="colorAnalysis" class="analysis-list"></div>
+            </section>
+
+            <section class="analysis-card">
+                <h2>季節別の登録状況</h2>
+                <div id="seasonAnalysis" class="analysis-list"></div>
+                <p class="analysis-note">
+                    複数の季節に対応する服は、それぞれの季節に集計されます。
+                    そのため、季節別の合計は総所有数と一致しない場合があります。
+                </p>
+            </section>
+
+            <section class="analysis-card">
+                <h2>クローゼット診断</h2>
+                <p id="analysisComment" class="analysis-comment"></p>
+                <p class="analysis-note">
+                    登録されたデータから自動生成したアドバイスです。
+                    実際のAIによる画像認識や外部AI APIは使用していません。
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="js/common.js"></script>
+    <script src="js/ai-analysis.js"></script>
+</body>
+</html>

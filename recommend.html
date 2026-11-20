@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Closet - ECトレンド＆おすすめ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive-fix.css">
+    <style>
+        .logo-link {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .filter-scroll-container {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .filter-btn {
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid #cbd5e0;
+            background: #ffffff;
+            color: #4a5568;
+            font-size: 13px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn.active {
+            background: #2d3748;
+            color: #ffffff;
+            border-color: #2d3748;
+        }
+
+        .recommend-banner {
+            margin-bottom: 20px;
+            padding: 16px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #ebf8ff 0%, #e9d8fd 100%);
+        }
+
+        .recommend-badge {
+            font-size: 11px;
+            background: #805ad5;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" class="logo-link">DIGITAL CLOSET</a>
+        </div>
+        <button class="menu-button" type="button" aria-label="メニューを開く">☰</button>
+    </header>
+
+    <!-- メイン -->
+    <main class="main">
+
+        <section class="closet-header">
+            <p class="sub-title">TREND & RECOMMEND</p>
+            <h1>トレンド＆似合う服を探す</h1>
+            <p>診断結果や手持ち服に合わせた最新アイテム</p>
+        </section>
+
+        <!-- ブランド・カテゴリ切り替えフィルター -->
+        <div class="filter-scroll-container">
+            <button class="filter-btn active" data-brand="all">すべて</button>
+            <button class="filter-btn" data-brand="uniqlo">ユニクロ</button>
+            <button class="filter-btn" data-brand="gu">GU</button>
+            <button class="filter-btn" data-brand="zozo">ZOZOTOWN</button>
+        </div>
+
+        <!-- 診断連携バナー -->
+        <div class="recommend-banner">
+            <div>
+                <span class="recommend-badge">AI PERSONALIZED</span>
+                <h3 style="font-size: 15px; margin-top: 6px; color: #2d3748; margin-bottom: 4px;">あなたの診断結果にヒット中</h3>
+                <p style="font-size: 12px; color: #4a5568; margin: 0;">骨格・顔タイプに合うおすすめ度 ★★★★☆ 以上のアイテム</p>
+            </div>
+        </div>
+
+        <!-- トレンド・おすすめアイテム一覧 -->
+        <div id="recommendGrid" class="clothes-grid">
+            <!-- JavaScriptで動的生成 -->
+        </div>
+
+    </main>
+
+    <!-- JavaScript -->
+    <script src="js/common.js"></script>
+    <script src="js/recommend.js"></script>
+</body>
+</html>

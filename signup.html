@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Closet - 新規会員登録</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive-fix.css">
+    <style>
+        .logo-link {
+            color: inherit;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" class="logo-link">DIGITAL CLOSET</a>
+        </div>
+        <button type="button" class="menu-button" aria-label="メニューを開く">☰</button>
+    </header>
+
+    <!-- メイン -->
+    <main class="main" style="max-width: 400px; margin: 40px auto; padding: 0 16px; box-sizing: border-box;">
+
+        <section class="closet-header" style="text-align: center;">
+            <p class="sub-title">CREATE ACCOUNT</p>
+            <h1>新規会員登録</h1>
+        </section>
+
+        <div class="form-container" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px;">
+            <form id="signupForm">
+                <!-- お名前 -->
+                <div class="form-group">
+                    <label for="signupName">お名前</label>
+                    <input type="text" id="signupName" class="form-input" required placeholder="山田 太郎">
+                </div>
+
+                <!-- メールアドレス -->
+                <div class="form-group">
+                    <label for="signupEmail">メールアドレス</label>
+                    <input type="email" id="signupEmail" class="form-input" required placeholder="example@email.com">
+                </div>
+
+                <!-- パスワード -->
+                <div class="form-group">
+                    <label for="signupPassword">パスワード（6文字以上）</label>
+                    <input type="password" id="signupPassword" class="form-input" required placeholder="••••••••">
+                </div>
+
+                <!-- パスワード（確認用） -->
+                <div class="form-group">
+                    <label for="signupPasswordConfirm">パスワード（確認用）</label>
+                    <input type="password" id="signupPasswordConfirm" class="form-input" required placeholder="••••••••">
+                    <!-- リアルタイム警告メッセージ表示用 -->
+                    <p id="passwordMatchError" style="display: none; font-size: 12px; margin-top: 4px; color: #e53e3e;"></p>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 8px;">新規登録する</button>
+            </form>
+
+            <div style="text-align: center; margin-top: 16px; font-size: 13px; color: #4a5568;">
+                <span>すでにアカウントをお持ちですか？</span>
+                <a href="login.html" style="color: #3182ce; font-weight: bold; text-decoration: underline; margin-left: 4px;">
+                    ログイン
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="js/common.js"></script>
+    <script src="js/signup.js"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Closet - 服一覧</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive-fix.css">
+</head>
+<body>
+<header class="header">
+    <div class="logo">
+        <a href="index.html" class="logo-link">DIGITAL CLOSET</a>
+    </div>
+
+    <nav class="nav-menu">
+        <a href="closet.html" class="nav-link active">クローゼット</a>
+        <a href="coordinate.html" class="nav-link">コーディネート</a>
+        <a href="add-cloth.html" class="nav-link">服を登録</a>
+    </nav>
+
+    <button class="menu-button" type="button" aria-label="メニューを開く">☰</button>
+</header>
+
+<main class="main">
+
+    <section class="closet-header">
+        <p class="sub-title">MY CLOSET</p>
+        <h1>クローゼット</h1>
+        <p>持っている服を管理できます。</p>
+    </section>
+
+    <section class="closet-toolbar">
+        <p>登録数：<strong id="clothesCount">0</strong> 着</p>
+
+        <a href="add-cloth.html" class="register-button">
+            服を登録する
+        </a>
+    </section>
+
+    <section class="closet-filters" aria-label="服の検索と絞り込み">
+
+        <div class="form-group">
+            <label for="searchClothes">キーワード検索</label>
+            <input
+                type="search"
+                id="searchClothes"
+                class="form-input"
+                placeholder="服の名前・ブランド・色など"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="filterCategory">カテゴリー</label>
+            <select id="filterCategory" class="form-select">
+                <option value="">すべて</option>
+                <option value="tops">トップス</option>
+                <option value="bottoms">ボトムス</option>
+                <option value="outer">アウター</option>
+                <option value="shoes">シューズ</option>
+                <option value="accessories">アクセサリー</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="filterColor">色</label>
+            <select id="filterColor" class="form-select">
+                <option value="">すべて</option>
+            </select>
+        </div>
+
+    </section>
+
+    <section class="closet-results">
+        <p id="resultCount" aria-live="polite">服を読み込んでいます。</p>
+
+        <div class="clothes-grid" id="clothesGrid">
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+            <div class="skeleton skeleton-card"></div>
+        </div>
+
+        <div id="emptyState" hidden>
+            <h2>まだ服が登録されていません</h2>
+            <p>服を登録すると、ここに一覧で表示されます。</p>
+
+            <a href="add-cloth.html" class="register-button">
+                服を登録する
+            </a>
+        </div>
+    </section>
+
+</main>
+
+<script src="js/common.js"></script>
+<script src="js/closet.js"></script>
+</body>
+</html>

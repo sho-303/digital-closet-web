@@ -1,0 +1,86 @@
+<!-- ========================================== -->
+<!-- File: index.html -->
+<!-- Date: 2026-11-09 -->
+<!-- Creator: K025C2093 吉川蔣 -->
+<!-- ========================================== -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="自分の服を管理し、毎日のコーディネートを楽しむデジタルクローゼット。">
+    <title>Digital Closet - ホーム</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive-fix.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+        <a href="index.html" style="text-decoration: none; color: inherit;">
+            DIGITAL CLOSET
+        </a>
+    </div>
+
+    <button class="menu-button" type="button" aria-label="メニューを開く">☰</button>
+</header>
+
+<main class="main">
+
+    <section class="closet-header">
+        <p class="sub-title">MY COLLECTION</p>
+        <h1>マイ・クローゼット</h1>
+        <p>お気に入りの服を管理して、毎日のコーディネートを楽しもう。</p>
+    </section>
+
+    <section class="closet-toolbar">
+        <div>
+            <p>MY ITEMS</p>
+            <p>最近登録した服を最大4着表示します。</p>
+        </div>
+
+        <a href="add-cloth.html" class="register-button">
+            ＋ 服を登録する
+        </a>
+    </section>
+
+    <section class="closet-results">
+
+        <div class="home-section-heading">
+            <h2>登録した服</h2>
+
+            <a href="closet.html" class="view-all-link">
+                すべて見る →
+            </a>
+        </div>
+
+        <div
+            id="closetGrid"
+            class="clothes-grid"
+            aria-label="登録した服"
+        ></div>
+
+        <div id="emptyState" class="empty-state" hidden>
+            <h2>まだ服が登録されていません</h2>
+
+            <p>
+                お気に入りの服を登録して、
+                自分だけのクローゼットを作りましょう。
+            </p>
+
+            <a href="add-cloth.html" class="register-button">
+                最初の1着を登録する
+            </a>
+        </div>
+
+    </section>
+
+</main>
+
+<script src="js/common.js"></script>
+<script src="js/index.js"></script>
+
+</body>
+</html>
